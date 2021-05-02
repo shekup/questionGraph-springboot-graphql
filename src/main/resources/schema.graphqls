@@ -1,5 +1,5 @@
 type Query {
-  rootQuestion(questionType: String): Question
+  rootQuestion: Question
   question(id: ID): Question
   nextQuestion(answerToPreviousQuestion: String, previousQuestionId: ID): Question
 }

@@ -46,17 +46,12 @@ public class QuestionAggregate {
         questionGraph.putEdgeValue(employment, company, "Yes");
     }
 
-    /**
-     *  This method needs performance improvement
-      */
-    Question searchByQuestionId(int id){
-        Set<Question> questions = questionGraph.nodes();
-        return questions.stream().filter(question -> id == question.getId()).findFirst().orElse(null);
+    Set<Question> questions(){
+        return questionGraph.nodes();
     }
 
-    Question retrieveNextQuestion(String answerToPreviousQuestion, int previousQuestionId){
-        Question previousQuestion = searchByQuestionId(previousQuestionId);
-        Set<Question> questions = questionGraph.adjacentNodes(searchByQuestionId(previousQuestionId));
+    Question retrieveNextQuestion(String answerToPreviousQuestion, Question previousQuestion){
+        Set<Question> questions = questionGraph.adjacentNodes(previousQuestion);
         for(Question question: questions){
             if(questionGraph.edgeValue(previousQuestion, question).equals(answerToPreviousQuestion)){
                 return question;
