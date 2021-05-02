@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class QuestionAggregate {
 
     MutableValueGraph<Question, String> questionGraph;
+    AtomicInteger id = new AtomicInteger(0);
 
     @PostConstruct
     void buildQuestionGraph(){
@@ -27,6 +29,7 @@ public class QuestionAggregate {
         income.setHelpText("Answer income related details");
         income.setReferenceAnswers(referenceAnswers);
         income.setQuestionType("root");
+        income.setId(id.getAndIncrement());
         questionGraph.addNode(income);
 
         // Add employment question
@@ -34,6 +37,7 @@ public class QuestionAggregate {
         employment.setQuestion("Currently employed");
         employment.setHelpText("Your current employment");
         employment.setReferenceAnswers(referenceAnswers);
+        employment.setId(id.getAndIncrement());
         questionGraph.addNode(employment);
 
         // Add link between two Income and Employment
@@ -43,6 +47,7 @@ public class QuestionAggregate {
         company.setQuestion("Current company");
         company.setHelpText("Your current company");
         company.setQuestionType("leaf");
+        company.setId(id.getAndIncrement());
         questionGraph.putEdgeValue(employment, company, "Yes");
     }
 
@@ -53,9 +58,9 @@ public class QuestionAggregate {
     Question retrieveNextQuestion(String answerToPreviousQuestion, Question previousQuestion){
         Set<Question> questions = questionGraph.adjacentNodes(previousQuestion);
         for(Question question: questions){
-            if(questionGraph.edgeValue(previousQuestion, question).equals(answerToPreviousQuestion)){
+            String value = questionGraph.edgeValue(previousQuestion, question).get();
+            if(value.equals(answerToPreviousQuestion))
                 return question;
-            }
         }
         return null;
     }

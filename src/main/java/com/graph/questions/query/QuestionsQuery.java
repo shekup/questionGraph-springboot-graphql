@@ -12,15 +12,15 @@ public class QuestionsQuery implements GraphQLQueryResolver {
     @Autowired
     QuestionService questionService;
 
-    Question getRootQuestion(){
+    public Question rootQuestion(){
         return questionService.getRootQuestion();
     }
 
-    Question getQuestion(int id){
+    public Question getQuestion(int id){
         return questionService.searchByQuestionId(id);
     }
 
-    Question getNextQuestion(String answerToPreviousQuestion, int previousQuestionId){
+    public Question getNextQuestion(String answerToPreviousQuestion, int previousQuestionId){
         return questionService.retrieveNextQuestion(answerToPreviousQuestion, previousQuestionId);
     }
 

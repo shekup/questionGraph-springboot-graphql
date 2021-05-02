@@ -9,8 +9,6 @@ import java.util.ArrayList;
 @Data
 public class Question {
 
-    @Id
-    @GeneratedValue
     int id;
 
     String question;
