@@ -1,0 +1,12 @@
+type Query {
+  rootQuestion(questionType: String): Question
+  question(id: ID): Question
+  nextQuestion(answerToPreviousQuestion: String, previousQuestionId: ID): Question
+}
+
+type Question {
+  id: ID
+  question: String
+  helpText: String
+  referenceAnswers: [String]
+}
