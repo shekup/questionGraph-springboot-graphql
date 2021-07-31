@@ -40,4 +40,4 @@ For further reference, please consider the following sections:
 * [GraphQL Spring boot](https://github.com/graphql-java-kickstart/graphql-spring-boot)
 * [Graphs Explained](https://github.com/google/guava/wiki/GraphsExplained)
 
-Thanks
+Thanks.  In a better design, the Graph db will be used instead of maintaining graph in Java code
